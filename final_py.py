@@ -128,3 +128,6 @@ def final_func_1():
 
 def get_current_high_price():
     return investpy.get_crypto_historical_data(crypto='bitcoin',from_date='01/01/2021',to_date=datetime.today().strftime('%d/%m/%Y'))['Close'][-1]
+
+def get_df():
+    return investpy.get_crypto_historical_data(crypto='bitcoin',from_date='01/01/2021',to_date=datetime.today().strftime('%d/%m/%Y')).reset_index()[['Date','Close']]
