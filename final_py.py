@@ -124,9 +124,9 @@ def final_func_1():
     X_scaled
 
     today_btc_closing_price =  sgd_reg.predict(X_scaled.values[-1].reshape(1,-1))
-    return float(today_btc_closing_price)
+    return final_df,float(today_btc_closing_price)
 
-def get_current_high_price():
+def get_current_close_price():
     return investpy.get_crypto_historical_data(crypto='bitcoin',from_date='01/01/2021',to_date=datetime.today().strftime('%d/%m/%Y'))['Close'][-1]
 
 def get_df():
