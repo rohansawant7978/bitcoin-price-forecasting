@@ -111,7 +111,7 @@ def final_func_1():
                         'bband_upper30 highest_price', 'dema30 opening_price', 'dema30 closing_price', 'dema30 highest_price', 'ema90 lowest_price', 'dema90 closing_price', 
                         'sma7 number_of_coins_in_circulation', 'tema7 highest_price',]]
 
-    sgd_reg = pickle.load(open('/content/linear_reg_25.sav', 'rb'))
+    sgd_reg = pickle.load(open('/content/bitcoin-price-forecasting/linear_reg_25.sav', 'rb'))
 
     X = final_df.drop(['Date'],axis=1)
 
