@@ -110,7 +110,7 @@ def final_func_1():
                         'tema30 opening_price', 'bband_upper90 opening_price', 'dema90 lowest_price', 'sma30 highest_price', 'bband_lower7 opening_price', 
                         'bband_upper30 highest_price', 'dema30 opening_price', 'dema30 closing_price', 'dema30 highest_price', 'ema90 lowest_price', 'dema90 closing_price', 
                         'sma7 number_of_coins_in_circulation', 'tema7 highest_price',]]
-
+    final_df["Date"] = pd.to_datetime(final_df["Date"], format="%d.%m.%Y").dt.date
     sgd_reg = pickle.load(open('/content/bitcoin-price-forecasting/linear_reg_25.sav', 'rb'))
 
     X = final_df.drop(['Date'],axis=1)
@@ -121,9 +121,11 @@ def final_func_1():
 
     scaler = MinMaxScaler()
     X_scaled[X.columns] =  scaler.fit_transform(X_scaled[X.columns])
+    X_scaled
 
     today_btc_closing_price =  sgd_reg.predict(X_scaled.values[-1].reshape(1,-1))
-    return final_df,round(float(today_btc_closing_price),2)
+    final_df = final_df.round(2)
+    return final_df,float(today_btc_closing_price)
 
 def get_current_close_price():
     return investpy.get_crypto_historical_data(crypto='bitcoin',from_date='01/01/2021',to_date=datetime.today().strftime('%d/%m/%Y'))['Close'][-1]
