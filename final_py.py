@@ -33,7 +33,7 @@ def final_func_1():
     btc_in_circulation_df = btc_in_circulation_df.rename(columns={'Value': 'number_of_coins_in_circulation'})
 
     data_frames = [avg_tr_value_df,ohlc_df,miners_revenue_df,btc_in_circulation_df]
-    final_df = reduce(lambda  left,right: pd.merge(left,right,on=['Date'],how='inner'),data_frames)
+    final_df = reduce(lambda  left,right: pd.merge(left,right,on=['Date'],how='left'),data_frames)
 
     close_bband_df_30 = ta.bbands(final_df['closing_price'],30)
     close_bband_df_90 = ta.bbands(final_df['closing_price'],90)
@@ -110,6 +110,7 @@ def final_func_1():
                         'tema30 opening_price', 'bband_upper90 opening_price', 'dema90 lowest_price', 'sma30 highest_price', 'bband_lower7 opening_price', 
                         'bband_upper30 highest_price', 'dema30 opening_price', 'dema30 closing_price', 'dema30 highest_price', 'ema90 lowest_price', 'dema90 closing_price', 
                         'sma7 number_of_coins_in_circulation', 'tema7 highest_price',]]
+    final_df = final_df.ffill()
 
     sgd_reg = pickle.load(open('/content/bitcoin-price-forecasting/linear_reg_25.sav', 'rb'))
 
@@ -124,10 +125,11 @@ def final_func_1():
     X_scaled
 
     today_btc_closing_price =  sgd_reg.predict(X_scaled.values[-1].reshape(1,-1))
-    
+
     final_df["Date"] = pd.to_datetime(final_df["Date"], format="%d.%m.%Y").dt.date
-    final_df = final_df
+
     return final_df,float(today_btc_closing_price)
+
 
 def get_current_close_price():
     return investpy.get_crypto_historical_data(crypto='bitcoin',from_date='01/01/2021',to_date=datetime.today().strftime('%d/%m/%Y'))['Close'][-1]
