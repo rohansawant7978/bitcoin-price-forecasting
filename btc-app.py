@@ -14,6 +14,7 @@ feature_df,pred = final_func_1()
 pred = round(pred,1)
 actual = get_current_close_price()
 
+st.markdown(f'<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"><b> Prediction for date {datetime.now().strftime("%d-%m-%Y")} <b></p>', unsafe_allow_html=True)
 st.markdown("""<style>div.stButton > button:first-child {background-color: #d1eeea;}</style>""", unsafe_allow_html=True)
 submit = st.button('Refresh to get latest price')
 if submit:
@@ -26,12 +27,12 @@ heat_map = ff.create_annotated_heatmap([[pred,actual]],annotation_text=[[f'Predi
 for i in range(len(heat_map.layout.annotations)):
     heat_map.layout.annotations[i].font.size = 25
 st.plotly_chart(heat_map)
-
-st.markdown(f'<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"> Absolute Error:<b> ${round(abs(pred-actual),2)}<b></p>', unsafe_allow_html=True)
-
+st.markdown(f'Absolute Error: **${round(abs(pred-actual),2)}**')
+st.markdown(f'<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"><b> BTC Closing Prices Data<b></p>', unsafe_allow_html=True)
 bar_plot = go.Figure()
-bar_plot.add_trace(go.Bar(x=close_price_df['Date'], y=close_price_df['Close'],marker=dict(color = close_price_df['Close'],colorscale='viridis_r')))
+bar_plot.add_trace(go.Bar(x=close_price_df['Date'], y=close_price_df['Close'],marker=dict(color = close_price_df['Close'],colorscale='Teal')))
 bar_plot.update_layout(title="Bitcoin Actual Closing Price From January 2021",xaxis_title="Date",yaxis_title="BTC Price(USD)")
+bar_plot.update_traces(dict(marker_line_width=0))
 st.plotly_chart(bar_plot)
 
 st.markdown('<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"><b> Features<b></p>', unsafe_allow_html=True)
