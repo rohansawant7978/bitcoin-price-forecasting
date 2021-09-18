@@ -23,7 +23,7 @@ if submit:
 
 close_price_df = get_df()
 
-heat_map = ff.create_annotated_heatmap([[pred,actual]],annotation_text=[[f'Predicted Price <br> <b>${round(pred,1)}<b>',f'Latest Price <br> <b>${actual}<b>']], colorscale='Teal')
+heat_map = ff.create_annotated_heatmap([[pred,actual]],annotation_text=[[f'Predicted Price <br> <b>${round(pred,1)}<b>',f'Latest Price <br> <b>${actual}<b>']], colorscale='Teal',hoverinfo='none')
 for i in range(len(heat_map.layout.annotations)):
     heat_map.layout.annotations[i].font.size = 25
 st.plotly_chart(heat_map)
@@ -31,8 +31,12 @@ st.markdown(f'Absolute Error: **${round(abs(pred-actual),2)}**')
 st.markdown(f'<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"><b> BTC Closing Prices Data<b></p>', unsafe_allow_html=True)
 bar_plot = go.Figure()
 bar_plot.add_trace(go.Bar(x=close_price_df['Date'], y=close_price_df['Close'],marker=dict(color = close_price_df['Close'],colorscale='Teal')))
-bar_plot.update_layout(title="Bitcoin Actual Closing Price From January 2021",xaxis_title="Date",yaxis_title="BTC Price(USD)")
+bar_plot.update_layout(title="Bitcoin Actual Closing Price",template="plotly_white",xaxis_title="Date",yaxis_title="BTC Price(USD)")
 bar_plot.update_traces(dict(marker_line_width=0))
+bar_plot.update_xaxes(showgrid=True, gridcolor='#bbbfbf',zerolinecolor='#bbbfbf',
+                       showline=True, linewidth=2, linecolor='black', mirror=True)
+bar_plot.update_yaxes(showgrid=True, gridcolor='#bbbfbf',zerolinecolor='#bbbfbf',
+                       showline=True, linewidth=2, linecolor='black', mirror=True)
 st.plotly_chart(bar_plot)
 
 st.markdown('<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"><b> Features<b></p>', unsafe_allow_html=True)
