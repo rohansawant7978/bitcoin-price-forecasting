@@ -28,6 +28,7 @@ for i in range(len(heat_map.layout.annotations)):
     heat_map.layout.annotations[i].font.size = 25
 st.plotly_chart(heat_map)
 st.markdown(f'Absolute Error: **${round(abs(pred-actual),2)}**')
+st.markdown(f'Percentage Error: **{round((abs(pred-actual)/actual)*100,2)}%**')
 st.markdown(f'<p style="background-color:#d1eeea;color:#000000;font-size:24px;border-radius:2%;"><b> BTC Closing Prices Data<b></p>', unsafe_allow_html=True)
 bar_plot = go.Figure()
 bar_plot.add_trace(go.Bar(x=close_price_df['Date'], y=close_price_df['Close'],marker=dict(color = close_price_df['Close'],colorscale='Teal')))
