@@ -1,5 +1,5 @@
 import streamlit as st
-from final_py import final_func_1,get_current_close_price,get_df
+from final_py import pred,get_current_close_price,get_df
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import random
@@ -10,7 +10,7 @@ st.title('Bitcoin Closing Price Forecasting')
 st.header('Using Linear Regression')
 st.markdown('created by: **Rohan Sawant**')
 
-feature_df,pred = final_func_1()
+feature_df,pred = pred
 pred = round(pred,1)
 actual = get_current_close_price()
 
