@@ -10,7 +10,7 @@ st.title('Bitcoin Closing Price Forecasting')
 st.header('Using Linear Regression')
 st.markdown('created by: **Rohan Sawant**')
 
-feature_df,pred = pred
+feature_df,pred = pred()
 pred = round(pred,1)
 actual = get_current_close_price()
 
