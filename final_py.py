@@ -58,6 +58,7 @@ def pred():
     X_scaled[X.columns] =  scaler.fit_transform(X_scaled[X.columns])
 
     today_btc_closing_price =  sgd_reg.predict(X_scaled.values[-1].reshape(1,-1))
+    final_df['Date'] = final_df['Date'].dt.strftime('%d-%m-%Y')
     return final_df,round(float(today_btc_closing_price))
 
 def get_current_close_price():
